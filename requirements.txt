@@ -1,0 +1,60 @@
+# ---- CORE PYTHON UTILITIES ----
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+plotly
+
+# ---- MACHINE LEARNING ----
+scikit-learn
+statsmodels
+xgboost
+
+# ---- NATURAL LANGUAGE PROCESSING ----
+nltk
+spacy
+transformers
+sentencepiece
+torch
+
+# ---- DATA INGESTION & APIS ----
+yfinance
+pandas-datareader
+requests
+beautifulsoup4
+newspaper3k
+
+# ---- DATABASES ----
+sqlalchemy
+pymysql
+psycopg2-binary
+
+# ---- BACKTESTING & MARKET TOOLS ----
+backtesting
+vectorbt
+ta
+
+# ---- WEB FRAMEWORK ----
+fastapi
+uvicorn
+jinja2
+
+# ---- AUTH & SECURITY ----
+passlib
+python-jose
+
+# ---- SERIALIZATION / STORAGE ----
+pydantic
+joblib
+
+# ---- ASYNC / AUTOMATION ----
+httpx
+aiohttp
+schedule
+
+# ---- DEPLOYMENT / PRODUCTION ----
+gunicorn
+
+# ---- LOGGING & DEBUG ----
+loguru

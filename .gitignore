@@ -1,0 +1,69 @@
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+
+# === Jupyter ===
+.ipynb_checkpoints/
+
+# === Virtual Environments ===
+venv/
+.env/
+env/
+ENV/
+
+# === VSCode ===
+.vscode/
+*.code-workspace
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+logs/
+
+# === Data Files (raw data, caches) ===
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+data/
+
+# === Models & Checkpoints ===
+models/
+*.h5
+*.pt
+*.pth
+*.joblib
+
+# === FastAPI / Backend ===
+__pycache__/
+*.db
+instance/
+
+# === Node (if frontend exists) ===
+node_modules/
+
+# === Build Artifacts ===
+dist/
+build/
+*.egg
+*.whl
+
+# === Sensitive Keys ===
+*.env
+api_key.txt
+secret_key.txt
+
+# === Additional Model Files ===
+torch_models/
+checkpoints/
+
+# === Notebook Cache ===
+.ipynb_checkpoints/
