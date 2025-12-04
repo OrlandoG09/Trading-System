@@ -37,6 +37,7 @@ class Config:
     MOMENTUM_WINDOWS = [21, 63, 252] 
     SMA_FAST = 20
     SMA_SLOW = 50 
+    SMA_VERY_SLOW = 200
     VOL_TARGET = 0.10 
     
     # --- INTELIGENCIA ARTIFICIAL & API KEYS ---
