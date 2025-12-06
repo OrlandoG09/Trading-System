@@ -49,7 +49,11 @@ def add_indicators(group):
     """
     # Ordenar por fecha es vital para cálculos temporales
     group = group.sort_values('date')
-    
+
+    # Si es sábado/domingo y hay NaNs, rellenamos con el precio del viernes.
+    # Esto evita que se borren filas y mantiene la continuidad para Bitcoin.
+    group[['close', 'high', 'low', 'open']] = group[['close', 'high', 'low', 'open']].ffill()
+
     # Retornos (Cambio porcentual diario)
     group['returns'] = group['close'].pct_change(fill_method=None)
     
@@ -100,15 +104,13 @@ def build_technical_features():
     
     logger.info(f"Calculando indicadores para {len(df['ticker'].unique())} activos.")
     
-    # APLICAR INDICADORES POR GRUPO (TICKER)
-    # Separa por ticker, aplica la función, y vuelve a juntar
+    # Aplicamos indicadores (incluye el rellenado de fines de semana)
     df_features = df.groupby('ticker', group_keys=False).apply(add_indicators)
     
-    # Limpieza final: Los indicadores crean Nulos al principio (los primeros 50 días no tienen EMA 50)
-    # Opcional: Borrar nulos o dejarlos. Para ML mejor borrar. Para Backtest depende.
-    # Vamos a borrar solo las filas que no tienen datos suficientes para la EMA lenta
-    df_features = df_features.dropna()
-    
+    # Borramos solo las filas iniciales (warm-up) donde NO se pudo calcular la EMA.
+    # Como ya hicimos ffill, los fines de semana ya tienen precio, así que no se borrarán.
+    df_features = df_features.dropna(subset=['ema_slow'])
+
     # Guardar
     Config.DATA_PROCESSED.mkdir(parents=True, exist_ok=True)
     df_features.to_parquet(output_path, engine='fastparquet', compression='snappy')
@@ -120,3 +122,6 @@ def build_technical_features():
 
 if __name__ == "__main__":
     build_technical_features()
+
+    
+    
