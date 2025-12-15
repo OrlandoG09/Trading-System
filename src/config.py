@@ -33,7 +33,43 @@ class Config:
     LOGS_DIR = BASE_DIR / "logs"
 
     # Universos y Estrategia
-    TICKERS = ['AAPL', 'SPY', 'EURUSD=X', 'GLD', 'BTC-USD']
+    # DICCIONARIO DE ACTIVOS ORGANIZADOS POR SECTOR
+    TICKER_CATEGORIES = {
+        "🚀 Big Tech & IA": [
+            "AAPL", "MSFT", "NVDA", "GOOGL", "AMZN", "META", "TSLA", "AMD", "INTC", "IBM",
+            "ORCL", "CRM", "ADBE", "CSCO", "NFLX", "QCOM", "TXN", "AVGO", "PLTR", "UBER"
+        ],
+        "🦉 Criptomonedas": [
+            "BTC-USD", "ETH-USD", "SOL-USD", "BNB-USD", "XRP-USD", "ADA-USD", "DOGE-USD",
+            "AVAX-USD", "DOT-USD", "MATIC-USD", "LTC-USD", "SHIB-USD", "LINK-USD", "UNI7083-USD", "ATOM-USD"
+        ],
+        "🌎 Índices & ETFs": [
+            "SPY", "QQQ", "DIA", "IWM", "VOO", "VTI", "TQQQ", "SQQQ", "ARKK", "EEM",
+            "XLF", "XLK", "XLV", "XLE", "GLD", "SLV", "GDX", "TLT", "HYG", "VIXY"
+        ],
+        "💱 Forex (Divisas)": [
+            "EURUSD=X", "USDMXN=X", "GBPUSD=X", "USDJPY=X", "AUDUSD=X", "USDCAD=X",
+            "USDCHF=X", "NZDUSD=X", "EURGBP=X", "EURJPY=X"
+        ],
+        "🏭 Industria & Consumo": [
+            "WMT", "KO", "PEP", "MCD", "DIS", "NKE", "SBUX", "COST", "TGT", "PG",
+            "JNJ", "PFE", "MRK", "BA", "CAT", "GE", "MMM", "F", "GM", "TM"
+        ],
+        "🏦 Finanzas & Bancos": [
+            "JPM", "BAC", "WFC", "C", "GS", "MS", "BLK", "V", "MA", "AXP",
+            "PYPL", "SQ", "COIN", "HOOD", "SOFI"
+        ],
+        "🛢️ Commodities & Energía": [
+            "XOM", "CVX", "BP", "SHEL", "COP", "OXY", "VALE", "RIO", "BHP", "FCX",
+            "CL=F", "GC=F", "SI=F", "NG=F", "HG=F" 
+        ]
+    }
+
+   
+    # Esta línea aplana el diccionario para crear la lista simple que necesita tu pipeline.
+    # Así no tienes que escribir los tickers dos veces.
+    TICKERS = [ticker for category in TICKER_CATEGORIES.values() for ticker in category]
+
     MOMENTUM_WINDOWS = [21, 63, 252] 
     SMA_FAST = 20
     SMA_SLOW = 50 

@@ -44,3 +44,5 @@ def aggregate_daily_sentiment():
 
 if __name__ == "__main__":
     aggregate_daily_sentiment()
+
+    

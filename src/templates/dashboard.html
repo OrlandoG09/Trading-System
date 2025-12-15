@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubo Alpha | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ESTILOS GLOBALES --- */
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --bullish: #10b981;
+            --bearish: #ef4444;
+            --neutral: #f59e0b;
+            --accent: #6366f1;
+            --accent-bright: #00eaff;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-image: radial-gradient(circle at top center, rgba(15, 23, 42, 0.8), var(--bg-dark));
+        }
+
+        /* --- HEADER (ROBOT FIX) --- */
+        .header-container {
+            padding: 1.5rem 2rem;
+            margin-bottom: 8rem; /* Espacio para que los pies no toquen las cards */
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.8));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 10;
+            overflow: visible; /* Permite que la cabeza salga */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: visible;
+        }
+
+        .brand-box { display: flex; align-items: center; gap: 40px; }
+
+        .logo-studio {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            margin-top: 65px; /* Bajamos el robot */
+        }
+
+        .logo-img {
+            max-height: 165px; width: auto; object-fit: contain; display: block;
+            mix-blend-mode: lighten; 
+            -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 90%);
+            mask-image: radial-gradient(circle at center, black 45%, transparent 90%);
+            filter: contrast(1.3) brightness(1.3) drop-shadow(0 0 8px rgba(0, 234, 255, 0.2));
+            transform: scale(1.4) translateY(15px);
+            transition: all 0.4s ease;
+        }
+        .logo-studio:hover .logo-img {
+            transform: scale(1.5) translateY(5px);
+            filter: contrast(1.4) brightness(1.5) drop-shadow(0 0 20px var(--accent-bright));
+            cursor: pointer;
+        }
+
+        .brand-title {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; margin: 0; font-weight: 900; letter-spacing: 2px;
+            background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5)); margin-top: 65px;
+        }
+
+        .status-badge {
+            display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 700; color: var(--bullish);
+            background: rgba(16, 185, 129, 0.1); padding: 10px 20px; border-radius: 30px; border: 1px solid var(--bullish);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15) inset; text-transform: uppercase; letter-spacing: 1px; margin-top: 65px;
+        }
+        .status-dot { width: 10px; height: 10px; background-color: var(--bullish); border-radius: 50%; box-shadow: 0 0 10px var(--bullish); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        /* --- MENÚ DE CATEGORÍAS --- */
+        .cat-btn:hover { background: #1e293b !important; color: white !important; }
+
+        /* --- LAYOUT DE TARJETAS --- */
+        main { padding: 0 2rem 3rem 2rem; max-width: 1400px; margin: 0 auto; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .card { background-color: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-7px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); border-color: rgba(99, 102, 241, 0.3); }
+        .card-top { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+        .ticker { font-size: 2rem; font-weight: 900; font-family: 'Orbitron', sans-serif; letter-spacing: 0.5px; }
+        .date { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
+        .price { font-size: 1.8rem; font-weight: 700; }
+        .tag { font-size: 0.75rem; font-weight: 800; padding: 6px 12px; border-radius: 6px; text-transform: uppercase; display: inline-block; margin-top: 8px; letter-spacing: 0.5px; }
+        .metrics { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: rgba(15, 23, 42, 0.4); padding: 15px; border-radius: 12px; margin-bottom: 1.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.03); }
+        .metric-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+        .metric-val { font-size: 1.1rem; font-weight: 800; margin-top: 5px; }
+        .narrative { font-size: 0.95rem; color: #cbd5e1; line-height: 1.7; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.5rem; display: flex; gap: 15px; align-items: flex-start; }
+        .bubo-icon { font-size: 1.4rem; filter: drop-shadow(0 0 5px orange); }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <header>
+            <div class="brand-box">
+                <div class="logo-studio">
+                    <img src="{{ url_for('static', filename='bubo.png') }}" alt="Bubo Alpha" class="logo-img">
+                </div>
+                <div>
+                    <h1 class="brand-title">Bubo Alpha</h1>
+                </div>
+            </div>
+            <div>
+                <div class="status-badge">
+                    <span class="status-dot"></span> Sistema Online
+                </div>
+                <div style="text-align: right; margin-top: 5px;">
+                    <a href="{{ url_for('logout') }}" style="color: #64748b; font-size: 0.8rem; text-decoration: none;">Cerrar Sesión</a>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div style="max-width: 1400px; margin: 0 auto 3rem auto; padding: 0 2rem;">
+        <details style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <summary style="cursor: pointer; font-weight: 800; color: #00eaff; font-family: 'Orbitron', sans-serif; outline: none; display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
+                <span>⚡ CENTRO DE COMANDO: SELECCIÓN DE ACTIVOS</span>
+            </summary>
+            
+            <div style="margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                <div style="border-right: 1px solid #334155; padding-right: 1rem;">
+                    <h4 style="color: #94a3b8; margin-top: 0; text-transform: uppercase; font-size: 0.8rem;">Sectores</h4>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        {% for category_name in categories.keys() %}
+                            <button onclick="showCategory('{{ category_name }}')" 
+                                    class="cat-btn"
+                                    id="btn-{{ loop.index }}"
+                                    style="padding: 12px; background: #0f172a; border: 1px solid #334155; color: #cbd5e1; text-align: left; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-weight: 600;">
+                                {{ category_name }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="color: #94a3b8; margin-top: 0; text-transform: uppercase; font-size: 0.8rem;">Activos (Click para agregar)</h4>
+                    
+                    {% for category_name, tickers in categories.items() %}
+                        <div id="tickers-{{ category_name }}" class="ticker-group" style="display: none; flex-wrap: wrap; gap: 8px;">
+                            {% for ticker in tickers %}
+                                <span onclick="addTicker('{{ ticker }}')" 
+                                      style="padding: 6px 14px; background: rgba(99, 102, 241, 0.1); color: #00eaff; border: 1px solid rgba(99, 102, 241, 0.5); border-radius: 20px; font-size: 0.9rem; cursor: pointer; transition: 0.2s;">
+                                    {{ ticker }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    
+                    <div id="initial-msg" style="color: #64748b; font-style: italic; margin-top: 20px;">
+                        👈 Selecciona un sector a la izquierda para desplegar los activos.
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; border-top: 1px solid #334155; padding-top: 1.5rem;">
+                <label style="color: #f8fafc; font-weight: bold; font-size: 0.9rem;">Tu Watchlist Activa:</label>
+                <form action="{{ url_for('update_watchlist') }}" method="POST" style="display: flex; gap: 10px; margin-top: 10px;">
+                    <input type="text" id="watchlist-input" name="tickers" 
+                           value="{{ user.watchlist }}" 
+                           placeholder="Selecciona arriba o escribe..." 
+                           style="flex: 1; padding: 12px; background: #0b1120; border: 1px solid #475569; color: #00eaff; border-radius: 6px; font-family: monospace; font-size: 1rem;">
+                    
+                    <button type="submit" 
+                            style="padding: 10px 30px; background: #10b981; color: #022c22; border: none; border-radius: 6px; cursor: pointer; font-weight: 800; text-transform: uppercase; transition: 0.3s;">
+                        GUARDAR
+                    </button>
+                </form>
+            </div>
+        </details>
+    </div>
+
+    <main class="dashboard-grid">
+        {% if not signals %}
+            <div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 3rem;">
+                <h2>Esperando órdenes...</h2>
+                <p>Configura tu watchlist arriba o espera a que el sistema procese los datos.</p>
+            </div>
+        {% else %}
+            {% for signal in signals %}
+                {% set color = '#f59e0b' %} {% set bg_tag = 'rgba(245, 158, 11, 0.15)' %}
+                {% if 'VUELO' in signal.signal or 'COMPRA' in signal.signal %}
+                    {% set color = '#10b981' %} {% set bg_tag = 'rgba(16, 185, 129, 0.15)' %}
+                {% elif 'PRUDENCIA' in signal.signal or 'WAIT' in signal.signal %}
+                    {% set color = '#ef4444' %} {% set bg_tag = 'rgba(239, 68, 68, 0.15)' %}
+                {% endif %}
+
+                <div class="card" style="border-top: 4px solid {{ color }};">
+                    <div class="card-top">
+                        <div>
+                            <div class="ticker">{{ signal.ticker }}</div>
+                            <div class="date">{{ signal.date }}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="price">${{ signal.close_price }}</div>
+                            <span class="tag" style="background: {{ bg_tag}}; color: {{ color }}; box-shadow: 0 0 10px {{ bg_tag }};">
+                                {{ signal.signal }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="metrics">
+                        <div>
+                            <div class="metric-label">Técnico</div>
+                            <div class="metric-val" style="color: {{ '#10b981' if signal.tech_score > 0 else '#ef4444' }}">
+                                {{ signal.tech_score }}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="metric-label">Noticias</div>
+                            <div class="metric-val" style="color: {{ '#10b981' if signal.sentiment_score > 0 else '#ef4444' }}">
+                                {{ signal.sentiment_score }}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="metric-label">Alpha</div>
+                            <div class="metric-val" style="color: var(--accent-bright); text-shadow: 0 0 8px var(--accent);">
+                                {{ signal.alpha_score }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="narrative">
+                        <span class="bubo-icon">🦉</span>
+                        <div>{{ signal.narrative | safe }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </main>
+
+    <script>
+        function showCategory(catName) {
+            document.querySelectorAll('.ticker-group').forEach(el => el.style.display = 'none');
+            document.getElementById('initial-msg').style.display = 'none';
+            
+            // Buscar por ID seguro (reemplazando espacios si es necesario, aquí asumimos match simple)
+            const groups = document.getElementsByClassName('ticker-group');
+            for(let group of groups) {
+                // Truco: el ID es "tickers-" + nombre. Si el nombre tiene espacios, asegúrate de que coincida.
+                if(group.id === 'tickers-' + catName) {
+                    group.style.display = 'flex';
+                }
+            }
+
+            // Resaltar botón activo
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.style.background = '#0f172a';
+                btn.style.borderColor = '#334155';
+                btn.style.color = '#cbd5e1';
+            });
+            
+            // Buscar el botón clickeado
+            const btns = document.querySelectorAll('.cat-btn');
+            for(let btn of btns) {
+                if(btn.textContent.trim() === catName) {
+                    btn.style.background = '#1e1b4b';
+                    btn.style.borderColor = '#6366f1';
+                    btn.style.color = 'white';
+                }
+            }
+        }
+
+        function addTicker(ticker) {
+            const input = document.getElementById('watchlist-input');
+            let current = input.value.split(',').map(t => t.trim()).filter(t => t !== "");
+            
+            if (!current.includes(ticker)) {
+                current.push(ticker);
+                input.value = current.join(', ');
+                input.style.borderColor = '#00eaff';
+                setTimeout(() => input.style.borderColor = '#475569', 300);
+            }
+        }
+    </script>
+</body>
+</html>

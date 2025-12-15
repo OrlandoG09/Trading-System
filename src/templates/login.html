@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Bubo Alpha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: #1e293b; padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); width: 100%; max-width: 350px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        h1 { font-family: 'Orbitron', sans-serif; margin-bottom: 1.5rem; color: #6366f1; }
+        input { width: 90%; padding: 10px; margin-bottom: 1rem; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px; }
+        button { width: 95%; padding: 12px; background: #6366f1; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #4f46e5; }
+        .links { margin-top: 1rem; font-size: 0.9rem; }
+        a { color: #00eaff; text-decoration: none; }
+        .alert { background: #ef4444; color: white; padding: 10px; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+        .success { background: #10b981; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Bubo Alpha</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ 'success' if category == 'success' else '' }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="text" name="username" placeholder="Usuario" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <div class="links">
+            ¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a>
+        </div>
+    </div>
+</body>
+</html>

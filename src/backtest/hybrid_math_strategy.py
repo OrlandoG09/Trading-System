@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def run_math_strategy():
     """
     Estrategia Cuantitativa Avanzada: Alpha Score.
-    No usa lógica booleana (AND/OR). Usa Álgebra Lineal (Sumas Ponderadas).
+   Usa Álgebra Lineal (Sumas Ponderadas).
     """
     input_path = Config.DATA_PROCESSED / "features_master.parquet"
     if not input_path.exists(): return
@@ -20,7 +20,7 @@ def run_math_strategy():
     df = pd.read_parquet(input_path)
 
     # PREPARACIÓN DE MATRICES
-
+    
     # Usamos ffill() para persistencia de datos 
     close = df.pivot(index='date', columns='ticker', values='close').ffill()
     ema_fast = df.pivot(index='date', columns='ticker', values='ema_fast').ffill()

@@ -9,6 +9,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def optimize_alpha_score():
+    
     """
     Optimización Paramétrica:
     Ejecuta la estrategia Híbrida múltiples veces con distintos pesos (Impact Factors)

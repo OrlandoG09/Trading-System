@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro | Bubo Alpha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: #1e293b; padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); width: 100%; max-width: 350px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        h1 { font-family: 'Orbitron', sans-serif; margin-bottom: 1.5rem; color: #00eaff; }
+        input { width: 90%; padding: 10px; margin-bottom: 1rem; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px; }
+        button { width: 95%; padding: 12px; background: #00eaff; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #06b6d4; }
+        .links { margin-top: 1rem; font-size: 0.9rem; }
+        a { color: #6366f1; text-decoration: none; }
+        .alert { background: #ef4444; color: white; padding: 10px; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Crear Cuenta</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="text" name="username" placeholder="Elige un usuario" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Registrarme</button>
+        </form>
+        <div class="links">
+            ¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>
+        </div>
+    </div>
+</body>
+</html>
