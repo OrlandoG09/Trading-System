@@ -56,16 +56,16 @@ def run_full_cycle():
 
     logger.info("FASE 1 COMPLETADA: Datos procesados con FinBERT.")
 
-    # =========================================================
+ 
     # FASE 2: CEREBRO MATEMÁTICO (Alpha Score)
-    # =========================================================
+  
     logger.info("FASE 2: Calculando Señales...")
     
     input_path = Config.DATA_PROCESSED / "features_master.parquet"
     output_json = Config.DATA_PROCESSED / "latest_signals.json"
     
     if not input_path.exists():
-        logger.error("❌ No encontré features_master.parquet.")
+        logger.error(" No encontré features_master.parquet.")
         return
 
     # Cargar Dataset Maestro

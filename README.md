@@ -53,6 +53,11 @@ El sistema fusiona ambos factores para generar una señal final:
     source venv/Scripts/activate  # En Windows
     pip install -r requirements.txt
     ```
+**Configurar Variables de Entorno:**
+    El sistema requiere una API Key de Finnhub para obtener noticias financieras.
+    * Crea un archivo `.env` en la raíz del proyecto.
+    * Agrega la siguiente línea: `FINNHUB_API_KEY=tu_api_key`
+    
 3.  Ejecutar el Pipeline de Datos:
     ```bash
     python -m src.pipeline.run_pipeline
@@ -61,6 +66,6 @@ El sistema fusiona ambos factores para generar una señal final:
     ```bash
     python -m src.app
     ```
-
+    
 ---
-Desarrollado por [Tu Nombre] - Estudiante de Economía & Data Science.
+Desarrollado por Orlando Galván - Estudiante de Economía y Research Assistant (SNI Scholar)
