@@ -1,69 +1,39 @@
-# === Python ===
+# --- PYTHON ---
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.pdb
-*.egg-info/
+*.py[cod]
+*$py.class
 
-# === Jupyter ===
-.ipynb_checkpoints/
-
-# === Virtual Environments ===
+# --- ENTORNOS VIRTUALES (¡OBLIGATORIO!) ---
 venv/
-.env/
 env/
-ENV/
+.venv/
 
-# === VSCode ===
+# --- BASE DE DATOS 
+# No queremos subir usuarios reales ni contraseñas de la DB
+*.db
+*.sqlite3
+instance/
+
+# --- ARCHIVOS GENERADOS (DATA SCIENCE) ---
+
+*.json
+!package.json
+# (El !package.json es por si algún día usas Node, para no ignorar ese)
+
+# --- CARPETAS DE DATOS ---
+# Si descargas muchos CSV o datos pesados, mejor ignora la carpeta
+data/
+logs/
+
+#CONFIGURACIÓN Y SECRETOS
+.env
+# OJO: Si tienes claves reales en src/config.py, considera ignorarlo también
+# src/config.py 
+
+# --- IDE Y SISTEMA OPERATIVO ---
 .vscode/
-*.code-workspace
-
-# === OS Files ===
+.idea/
 .DS_Store
 Thumbs.db
 
-# === Logs ===
-*.log
-logs/
-
-# === Data Files (raw data, caches) ===
-*.csv
-*.xlsx
-*.xls
-*.parquet
-*.feather
-data/
-
-# === Models & Checkpoints ===
-models/
-*.h5
-*.pt
-*.pth
-*.joblib
-
-# === FastAPI / Backend ===
-__pycache__/
-*.db
-instance/
-
-# === Node (if frontend exists) ===
-node_modules/
-
-# === Build Artifacts ===
-dist/
-build/
-*.egg
 *.whl
-
-# === Sensitive Keys ===
-*.env
-api_key.txt
-secret_key.txt
-
-# === Additional Model Files ===
-torch_models/
-checkpoints/
-
-# === Notebook Cache ===
-.ipynb_checkpoints/
